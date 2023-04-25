@@ -1,0 +1,20 @@
+{
+  "name": "stori-challenge-proyect",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "lerna run build",
+    "link": "lerna link --force-local"
+  },
+  "keywords": [],
+  "author": "Moises C Cuevas",
+  "license": "ISC",
+  "workspaces": [
+    "packages/front",
+    "packages/back"
+  ],
+  "devDependencies": {
+    "lerna": "^6.6.1"
+  }
+}

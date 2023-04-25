@@ -1,0 +1,23 @@
+$color2: #2E4F4F;
+$color3: #0E8388;
+
+.listItem {
+  width: -webkit-fill-available;
+  height: 70px;
+  display: grid;
+  grid-auto-flow: column;
+  grid-template-columns: auto;
+  padding: 0px 20px;
+  align-items: center;
+  background-color: $color2;
+  color: #FFFFFF;
+  & p:first-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-wrap: break-word;
+  }
+}
+
+.listItem:hover {
+  background-color: $color3;
+}

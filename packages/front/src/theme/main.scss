@@ -1,0 +1,97 @@
+
+$color1: #2C3333;
+$color2: #2E4F4F;
+$color3: #0E8388;
+$color4: #CBE4DE;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+    sans-serif;
+}
+
+.main-container {
+  width: 100%;
+}
+
+.content {
+  padding-top: 90px;
+  width: 100%;
+}
+
+.login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.light{
+  color: $color1;
+  background-color: $color4;
+}
+
+.dark {
+  color: $color4;
+  background-color: $color1;
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 1);
+  color: #FFFFFF;
+  width: -webkit-fill-available;
+  position: fixed;
+  top: 0px;
+  height: 90px;
+  display: flex;
+  padding: 0px 20px;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 2;
+  & :nth-child(2) {
+    display: grid;
+    grid-auto-flow: column;
+    grid-template-columns: auto;
+    align-items: center;
+    grid-column-gap: 25px;
+    & a {
+      text-decoration: none;
+      color: #FFFFFF
+    }
+    & a:hover {
+      color: $color4;
+    }
+  }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-menu {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 1);
+  width: 15%;
+  min-width: 150px;
+  right: 0px;
+  top: 90px;
+  & ul {
+    padding: 0px 20px;
+  }
+  & li {
+    list-style-type: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  & li:last-child {
+    border-top: 1px solid #FFFFFF
+  }
+}
+
+.home {
+  padding: 10px 50px
+}
