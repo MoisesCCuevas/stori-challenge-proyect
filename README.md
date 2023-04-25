@@ -23,10 +23,3 @@ docker-compose files needed to build and execute your code.
 5. PDF of png document should be attached to the email
 6. Recipient users can click a "unsubscribe" link contained in the email, the user should not receive
 any more emails.
-
-## Available Scripts
-In the project directory, you can run:
-
-### `npm run start`
-### `npm run build`
-### `npm run test`
