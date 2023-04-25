@@ -13,7 +13,7 @@ const NewslettersList : React.FC = (props) => {
   } = props;
 
   const { loading, error, data } = useQuery(GET_ALL_NEWSLETTERS);
-  const [send, { data: dataS, loading: loadingS }] = useMutation(SEND_NEWSLETTER, {
+  const [send, { data: dataS, error: errorS, loading: loadingS }] = useMutation(SEND_NEWSLETTER, {
     refetchQueries: [
       'getEmailsSendedList'
     ],
@@ -21,19 +21,25 @@ const NewslettersList : React.FC = (props) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (error) {
+    if (error || errorS) {
       dispatch(setNotification({
-        message: error.message,
+        message: error?.message || errorS?.message,
         type: "error"
       }));
     }
-  }, [error]);
+  }, [error, errorS]);
 
   useEffect(() => {
-    if (dataS) {
+    if (dataS?.submission) {
       dispatch(setNotification({
         message: "Newsletter Sended",
         type: "success"
+      }));
+    }
+    if (dataS?.submission === false) {
+      dispatch(setNotification({
+        message: "Email service Fail",
+        type: "error"
       }));
     }
   }, [dataS]);

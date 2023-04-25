@@ -19,7 +19,7 @@ export class EmailService {
     const files = newsletter.files.map((file : any) => {
       return { path: file.data };
     });
-    return new Promise((resolve) => {
+    return new Promise((resolve, reject) => {
       Promise.all(
         recipients.map((info: any) => new Promise(async (resolve) => {
           const response = await this.mailService.sendMail({
@@ -28,13 +28,15 @@ export class EmailService {
             subject: newsletter.name,
             html: newsletter.html + `<br/><a href="http://localhost:4000/unsubscribe/${newsletter.id}/${info.id}" ><p>Unsubscribe</p></a>`,
             attachments: files
+          }).catch(() => {
+            reject(false)
           });
           resolve(response);
           this.emailSended.push({ id: newsletter.id, sendDate: new Date().toISOString() })
         }))
-      ).then((values) => {
-        resolve(values);
-      });
+      ).then(() => {
+        resolve(true);
+      })
     });
   }
 
@@ -42,11 +44,9 @@ export class EmailService {
     try {
       const newsletter = this.newsletterService.findNewsletter(id);
       const recipients = this.recipientService.findRecipientsByNewsletter(id);
-      this.sendMultiple(recipients, newsletter);
-      return true;
+      return await this.sendMultiple(recipients, newsletter);
     } catch (error) {
-      console.log(error);
-      return false;
+      return error;
     }    
   }
 
