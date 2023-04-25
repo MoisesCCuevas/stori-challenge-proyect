@@ -13,7 +13,11 @@ const NewslettersList : React.FC = (props) => {
   } = props;
 
   const { loading, error, data } = useQuery(GET_ALL_NEWSLETTERS);
-  const [send, { data: dataS, loading: loadingS }] = useMutation(SEND_NEWSLETTER);
+  const [send, { data: dataS, loading: loadingS }] = useMutation(SEND_NEWSLETTER, {
+    refetchQueries: [
+      'getEmailsSendedList'
+    ],
+  });
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,7 +43,7 @@ const NewslettersList : React.FC = (props) => {
   };
 
   return (
-    <div className="" data-testid="newsletters">
+    <div className="info-newslatter">
       <Link to="/newsletters/info-newsletter">
         <Button>
           <i className='fas fa-plus'/>

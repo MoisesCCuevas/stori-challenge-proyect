@@ -70,3 +70,10 @@ $color4: #CBE4DE;
     white-space: nowrap;
   }
 }
+
+.statistics-container {
+  display: grid;
+  grid-auto-flow: column;
+  grid-column-gap: 20px;
+  grid-template-columns: repeat(auto-fill, 400px);
+}

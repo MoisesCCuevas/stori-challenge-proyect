@@ -57,7 +57,7 @@ const Recipient : React.FC = (props) => {
   };
 
   return (
-    <div className="" data-testid="newsletters">
+    <div className="info-newslatter">
       <div className='info-newslatter-buttons'>
         <Link to="/newsletters/info-recipient">
           <Button>

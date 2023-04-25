@@ -10,6 +10,7 @@ import Home from './Home';
 import Main from './newsletters/Main';
 import InfoNewsletter from './newsletters/InfoNewsletter';
 import InfoRecipient from './newsletters/InfoRecipient';
+import Statistics from './Statistics';
 import Notification from './../components/core/notification';
 
 const App : React.FC = () => {
@@ -38,7 +39,7 @@ const App : React.FC = () => {
               <Route path="/newsletters/info-recipient" element={<InfoRecipient />} >
                 <Route path=":id" element={<InfoRecipient />} />
               </Route>
-              <Route path="statistics" element={<div />} />
+              <Route path="statistics" element={<Statistics />} />
             </>
           )}
         </Routes>

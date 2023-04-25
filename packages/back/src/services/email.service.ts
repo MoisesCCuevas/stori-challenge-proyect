@@ -3,10 +3,11 @@ import { MailerService } from '@nestjs-modules/mailer';
 import { Cron } from '@nestjs/schedule';
 import { NewsletterService } from './newsletter.service';
 import { RecipientService } from './recipient.service';
+import { EmailRegister } from '../models/emailRegister.model';
 
 @Injectable()
 export class EmailService {
-  public emailSended: Array<any> = [];
+  public emailSended: Array<EmailRegister> = [];
 
   constructor(
     private mailService: MailerService,
@@ -60,5 +61,9 @@ export class EmailService {
       }
     });
     console.log("Running service...");
+  }
+
+  emailsSendedList() {
+    return this.emailSended;
   }
 }

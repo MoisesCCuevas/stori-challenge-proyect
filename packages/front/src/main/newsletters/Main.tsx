@@ -32,7 +32,7 @@ const Main : React.FC = (props) => {
   };
 
   return (
-    <div className="newsletters" data-testid="newsletters">
+    <div className="newsletters">
       <div className={`menu ${theme}`}>
         {menu.map(( name, index ) => (
           <h4
