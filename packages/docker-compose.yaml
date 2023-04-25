@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+  back:
+    image: docker-nestjs-backend
+    build: ./back
+    command: npm run dev
+    volumes:
+      - ./back:/usr/src/app/back
+      - /usr/src/app/back/node_modules
+    ports:
+      - 4000:4000
+
+  front:
+    build: ./front
+    volumes:
+      - ./front:/usr/src/app/front
+      - /usr/src/app/front/node_modules
+    ports:
+      - "3000:3000"
+    depends_on:
+      - back

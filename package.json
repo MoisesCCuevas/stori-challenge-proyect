@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "build": "lerna run build",
-    "link": "lerna link --force-local"
+    "link": "lerna link --force-local",
+    "build:docker": "docker-compose build --no-cache",
+    "docker:up": "docker-compose up",
+    "docker:stop": "docker-compose stop"
   },
   "keywords": [],
   "author": "Moises C Cuevas",
