@@ -16,21 +16,21 @@ import {
   
     @Query(() => Recipient)
     async recipient(@Args('id') id: string) {
-      return this.recipientService.findRecipient(id);
+      return await this.recipientService.findRecipient(id);
     }
   
     @Query(() => [Recipient])
     async recipientList() {
-      return this.recipientService.recipientsList();
+      return await this.recipientService.recipientsList();
     }
   
     @Mutation(() => Recipient)
     async createRecipient(@Args({ name: 'recipient' }) recipient: CreateRecipient){
-      return this.recipientService.createRecipient(recipient);
+      return await this.recipientService.createRecipient(recipient);
     }
 
     @Mutation(() => Boolean)
     async createManyRecipients(@Args({ name: 'recipients', type: () => [CreateRecipient] }) recipients: CreateRecipient[]){
-      return this.recipientService.createManyRecipient(recipients);
+      return await this.recipientService.createManyRecipient(recipients);
     }
   }

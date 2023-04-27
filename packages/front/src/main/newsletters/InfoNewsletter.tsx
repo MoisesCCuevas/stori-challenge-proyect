@@ -62,7 +62,6 @@ const InfoNewsletter : React.FC = (props) => {
       JSON.parse(dataQuery.newsletter.design)
     );
   };
-  console.log(typeof id);
 
   useEffect(() => {
     if(dataQuery && typeof id === "string") setValues();

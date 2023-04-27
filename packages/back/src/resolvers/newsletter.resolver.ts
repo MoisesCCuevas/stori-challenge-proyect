@@ -16,21 +16,21 @@ export class NewsletterResolver {
 
   @Query(() => Newsletter)
   async newsletter(@Args('id') id: string) {
-    return this.newsletterService.findNewsletter(id);
+    return await this.newsletterService.findNewsletter(id);
   }
 
   @Query(() => [Newsletter])
   async newsletterList() {
-    return this.newsletterService.newsletterList();
+    return await this.newsletterService.newsletterList();
   }
 
   @Mutation(() => Newsletter)
   async createNewsletter(@Args({ name: 'newsletter' }) newsletter: CreateNewsletter){
-    return this.newsletterService.createNewsletter(newsletter);
+    return await this.newsletterService.createNewsletter(newsletter);
   }
 
   @Mutation(() => String)
   async removeNewsletter(@Args({ name: 'id' }) id: string){
-    return this.newsletterService.removeNewsletter(id);
+    return await this.newsletterService.removeNewsletter(id);
   }
 }

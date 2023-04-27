@@ -15,11 +15,11 @@ export class EmailResolver {
 
   @Query(() => [EmailRegister])
   async emailsSendedList() {
-    return this.emailService.emailsSendedList();
+    return await this.emailService.emailsSendedList();
   }
 
   @Mutation(() => Boolean)
   async submission(@Args('id') id: string) {
-    return this.emailService.sendEmailByNewsletter(id);
+    return await this.emailService.sendEmailByNewsletter(id);
   }
 }

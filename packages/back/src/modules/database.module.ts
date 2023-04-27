@@ -4,7 +4,7 @@ import { MongooseModule } from '@nestjs/mongoose';
 @Global()
 @Module({
   imports: [
-    MongooseModule.forRoot('mongodb://root:root@localhost:27017', {
+    MongooseModule.forRoot('mongodb://root:root@db:27017', {
       user: "root",
       pass: "root",
       dbName: "Newsletters"
