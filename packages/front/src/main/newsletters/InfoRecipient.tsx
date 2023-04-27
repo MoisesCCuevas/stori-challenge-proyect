@@ -41,7 +41,7 @@ const InfoRecipient : React.FC = (props) => {
     data: dataN
   } = useQuery(GET_ALL_NEWSLETTERS);
   const { data: dataQuery } = useQuery(GET_RECIPIENT, {
-    variables: { id: Number(id) }
+    variables: { id: id }
   });
 
   const setValues = async () => {
@@ -53,7 +53,7 @@ const InfoRecipient : React.FC = (props) => {
   };
 
   useEffect(() => {
-    if(dataQuery && id) setValues();
+    if(dataQuery && typeof id === "string") setValues();
   }, [dataQuery]);
 
   useEffect(() => {
@@ -81,7 +81,7 @@ const InfoRecipient : React.FC = (props) => {
     const email : any = document.querySelector("#recipient-email");
     createRecipient({ variables: {
       recipient: {
-        id: id && Number(id),
+        id: id,
         name: name.value,
         email: email.value,
         suscribed: newsletters
@@ -89,7 +89,7 @@ const InfoRecipient : React.FC = (props) => {
     }});
   };
 
-  const selectNesletter = (id: number) => {
+  const selectNesletter = (id: string) => {
     const newList = [...newsletters];
     if (newList.includes(id)) {
       const index = newList.indexOf(2);

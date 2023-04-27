@@ -44,7 +44,7 @@ const NewslettersList : React.FC = (props) => {
     }
   }, [dataS]);
 
-  const submissionAction = (id: number) => {
+  const submissionAction = (id: string) => {
     send({ variables: { id }});
   };
 

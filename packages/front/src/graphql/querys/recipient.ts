@@ -11,7 +11,7 @@ export const GET_ALL_RECIPIENTS = gql`
 `;
 
 export const GET_RECIPIENT = gql`
-  query getRecipient($id: Int!){
+  query getRecipient($id: String!){
     recipient(id: $id){
       id
       name
