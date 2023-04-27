@@ -1,9 +1,9 @@
-import { Field, Int, InputType } from '@nestjs/graphql';
+import { Field, InputType } from '@nestjs/graphql';
 
 @InputType()
 export class CreateRecipient {
-  @Field(() => Int, { nullable: true })
-  id: number;
+  @Field({ nullable: true })
+  id: string;
 
   @Field()
   name: string;
@@ -11,6 +11,6 @@ export class CreateRecipient {
   @Field()
   email: string;
 
-  @Field(() => [Number], { nullable: true })
-  suscribed?: number[];
+  @Field(() => [String], { nullable: true })
+  suscribed?: string[];
 }

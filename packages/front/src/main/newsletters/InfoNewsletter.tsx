@@ -44,7 +44,7 @@ const InfoNewsletter : React.FC = (props) => {
     ],
   });
   const { data: dataQuery } = useQuery(GET_NEWSLETTER, {
-    variables: { id: Number(id) }
+    variables: { id: id }
   });
   const { theme } = useContext(ThemeContext);
   const emailEditorRef : any = useRef(null);
@@ -62,9 +62,10 @@ const InfoNewsletter : React.FC = (props) => {
       JSON.parse(dataQuery.newsletter.design)
     );
   };
+  console.log(typeof id);
 
   useEffect(() => {
-    if(dataQuery && id) setValues();
+    if(dataQuery && typeof id === "string") setValues();
   }, [dataQuery]);
 
   useEffect(() => {
@@ -95,7 +96,7 @@ const InfoNewsletter : React.FC = (props) => {
       const { html, design } = data;
       createNewsletter({ variables: {
         newsletter: {
-          id: id && Number(id),
+          id: id,
           name: newsletterName.value,
           design: JSON.stringify(design),
           scheduled: newsletterScheduled.value,

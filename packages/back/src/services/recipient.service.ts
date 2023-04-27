@@ -1,42 +1,47 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
+import { Recipient } from '../models/recipient.model';
 import { CreateRecipient } from '../dtos/recipient.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class RecipientService {
-  public recipients: Array<any> = [];
+  constructor (
+    @InjectModel(Recipient.name) private recipients: Model<Recipient>
+  ) {}
 
-  recipientsList() {
-    return this.recipients;
+  async recipientsList() {
+    return this.recipients.find().exec();
   }
 
-  findRecipient(id: number) {
-    const recipient = this.recipients.find((f) => f.id === id);
+  async findRecipient(id: string) {
+    const recipient = await this.recipients.findById(id).exec();
     if (!recipient) throw new NotFoundException(`Recipient id:${id} not found`);
     return recipient;
   }
 
-  findSuscriptions(id: number) {
-    const recipient = this.recipients.find((f) => f.id === id);
+  async findSuscriptions(id: string) {
+    const recipient = await this.recipients.findById(id).exec();
     if (!recipient) throw new NotFoundException(`Recipient id:${id} not found`);
     return recipient.suscribed;
   }
 
-  createRecipient(payload: CreateRecipient) {
-    if (payload.id) {
-      const recipient = this.recipients.filter((f) => f.id !== payload.id);
-      recipient.push(payload);
-      this.recipients = recipient;
-    } else {
-      payload.id = this.recipients.length + 1;
-      this.recipients.push(payload);
+  async createRecipient(payload: CreateRecipient) {
+    const { id } = payload;
+    let recipient = await this.recipients
+      .findByIdAndUpdate(id, { $set: payload }, { new: true })
+      .exec();
+    if (!recipient) {
+      recipient = new this.recipients(payload);
+      recipient.save();
     }
-    return payload;
+    return recipient;
   }
 
-  createManyRecipient(payload: CreateRecipient[]) {
+  async createManyRecipient(payload: CreateRecipient[]) {
     try {
-      payload.forEach((recipient: any) => {
-        this.createRecipient(recipient);
+      payload.forEach( async (recipient: any) => {
+        await this.createRecipient(recipient);
       });
       return true;
     } catch(error) {
@@ -44,18 +49,18 @@ export class RecipientService {
     }
   }
 
-  findRecipientsByNewsletter(id: number) {
-    const recipientsList = this.recipients.filter((r: any) => r.suscribed.includes(id));
-    return recipientsList;
+  async findRecipientsByNewsletter(id: string) {
+    const recipientsList = await this.recipientsList();
+    return recipientsList.filter((r: any) => r.suscribed.includes(id));
   }
 
-  unsubscribeRecipient(idNewsletter: number, idUser: number) {
+  async unsubscribeRecipient(idNewsletter: string, idUser: string) {
     try {
-      const reciepients = [...this.recipients];
-      const recipient = reciepients.find((r) => r.id == idUser);
-      this.recipients = reciepients.filter((reciepient) => reciepient.id != idUser);
-      recipient.suscribed = recipient.suscribed.filter((value: number) => value != idNewsletter);
-      this.recipients.push(recipient);
+      const recipient = await this.findRecipient(idUser);
+      const newSuscribed = recipient.suscribed.filter(v => v !== idNewsletter);
+      await this.recipients
+        .findByIdAndUpdate(idUser, { $set: { suscribed: newSuscribed }})
+        .exec();
       return "You has been unsubscribed to this newsletter."
     } catch(error) {
       throw new NotFoundException(error.message);

@@ -10,7 +10,7 @@ export const GET_ALL_NEWSLETTERS = gql`
 `;
 
 export const GET_NEWSLETTER = gql`
-  query getNewsletter($id: Int!){
+  query getNewsletter($id: String!){
     newsletter(id: $id){
       id
       name

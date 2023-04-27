@@ -8,7 +8,7 @@ export class AppController {
   ) {}
 
   @Get(":idNewsletter/:idUser")
-  unsubscribe(@Param('idNewsletter') idNewsletter: number, @Param('idUser') idUser: number) : string {
+  async unsubscribe(@Param('idNewsletter') idNewsletter: string, @Param('idUser') idUser: string) {
     return this.recipientService.unsubscribeRecipient(idNewsletter, idUser);
   }
 }

@@ -1,5 +1,4 @@
 import {
-  Int,
   Resolver,
   Args,
   Query,
@@ -16,7 +15,7 @@ export class NewsletterResolver {
   ) {}
 
   @Query(() => Newsletter)
-  async newsletter(@Args('id', { type: () => Int }) id: number) {
+  async newsletter(@Args('id') id: string) {
     return this.newsletterService.findNewsletter(id);
   }
 
@@ -28,5 +27,10 @@ export class NewsletterResolver {
   @Mutation(() => Newsletter)
   async createNewsletter(@Args({ name: 'newsletter' }) newsletter: CreateNewsletter){
     return this.newsletterService.createNewsletter(newsletter);
+  }
+
+  @Mutation(() => String)
+  async removeNewsletter(@Args({ name: 'id' }) id: string){
+    return this.newsletterService.removeNewsletter(id);
   }
 }

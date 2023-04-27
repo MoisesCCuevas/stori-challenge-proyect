@@ -1,30 +1,38 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Newsletter } from '../models/newsletter.model';
 import { CreateNewsletter } from '../dtos/newsletter.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class NewsletterService {
-  public newsletters: Array<Newsletter> = [];
+  constructor (
+    @InjectModel(Newsletter.name) private newsletters: Model<Newsletter>
+  ) {}
 
-  newsletterList() {
-    return this.newsletters;
+  async newsletterList() {
+    return this.newsletters.find().exec();
   }
 
-  findNewsletter(id: number) {
-    const newsletter = this.newsletters.find((f) => f.id === id);
+  async findNewsletter(id: string) {
+    const newsletter = await this.newsletters.findById(id).exec();
     if (!newsletter) throw new NotFoundException(`Newsletter id:${id} not found`);
     return newsletter;
   }
 
-  createNewsletter(payload: CreateNewsletter) {
-    if (payload.id) {
-      const newsletter = this.newsletters.filter((f) => f.id !== payload.id);
-      newsletter.push(payload);
-      this.newsletters = newsletter;
-    } else {
-      payload.id = this.newsletters.length + 1;
-      this.newsletters.push(payload);
+  async createNewsletter(payload: CreateNewsletter) {
+    const { id } = payload;
+    let newsletter = await this.newsletters
+      .findByIdAndUpdate(id, { $set: payload }, { new: true })
+      .exec();
+    if (!newsletter) {
+      newsletter = new this.newsletters(payload);
+      newsletter.save();
     }
-    return payload;
+    return newsletter;
+  }
+
+  async removeNewsletter(id: string) {
+    return this.newsletters.findByIdAndRemove(id);
   }
 }

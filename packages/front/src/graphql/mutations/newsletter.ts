@@ -9,7 +9,7 @@ export const CREATE_NEWSLETTER = gql`
 `;
 
 export const SEND_NEWSLETTER = gql`
-  mutation send ($id: Int!){
+  mutation send ($id: String!){
     submission (id: $id)
   }
 `;

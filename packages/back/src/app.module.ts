@@ -7,6 +7,7 @@ import { NewsletterModule } from './modules/newsletter.module';
 import { RecipientModule } from './modules/recipient.module';
 import { EmailModule } from './modules/email.module';
 import { AppController } from './app.controller';
+import { DatabaseModule } from './modules/database.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { AppController } from './app.controller';
       }
     }),
     ScheduleModule.forRoot(),
+    DatabaseModule,
     NewsletterModule,
     RecipientModule,
     EmailModule

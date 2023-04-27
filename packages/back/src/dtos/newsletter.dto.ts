@@ -4,8 +4,8 @@ import { CreateFile } from './file.dto';
 
 @InputType()
 export class CreateNewsletter {
-  @Field(() => Int, { nullable: true })
-  id: number;
+  @Field({ nullable: true })
+  id: string;
 
   @Field()
   name: string;

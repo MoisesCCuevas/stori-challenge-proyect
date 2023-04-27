@@ -4,15 +4,16 @@ import { Cron } from '@nestjs/schedule';
 import { NewsletterService } from './newsletter.service';
 import { RecipientService } from './recipient.service';
 import { EmailRegister } from '../models/emailRegister.model';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class EmailService {
-  public emailSended: Array<EmailRegister> = [];
-
   constructor(
     private mailService: MailerService,
     private newsletterService: NewsletterService,
     private recipientService: RecipientService,
+    @InjectModel(EmailRegister.name) private emailSended: Model<EmailRegister>
   ) {}
 
   private async sendMultiple(recipients: any[], newsletter: any) {
@@ -32,7 +33,8 @@ export class EmailService {
             reject(false)
           });
           resolve(response);
-          this.emailSended.push({ id: newsletter.id, sendDate: new Date().toISOString() })
+          const emailSended = new this.emailSended({ idNewsletter: newsletter.id, sendDate: new Date().toISOString() })
+          emailSended.save();
         }))
       ).then(() => {
         resolve(true);
@@ -40,10 +42,10 @@ export class EmailService {
     });
   }
 
-  async sendEmailByNewsletter(id: number) {
+  async sendEmailByNewsletter(id: string) {
     try {
-      const newsletter = this.newsletterService.findNewsletter(id);
-      const recipients = this.recipientService.findRecipientsByNewsletter(id);
+      const newsletter = await this.newsletterService.findNewsletter(id);
+      const recipients = await this.recipientService.findRecipientsByNewsletter(id);
       return await this.sendMultiple(recipients, newsletter);
     } catch (error) {
       return error;
@@ -51,19 +53,19 @@ export class EmailService {
   }
 
   @Cron('0 */1 * * * 1-5')
-  scheduleService() {
+  async scheduleService() {
     const currentTime = new Date().toLocaleString();
-    const newsletters = this.newsletterService.newsletterList();
-    newsletters.forEach((newsletters: any) => {
+    const newsletters = await this.newsletterService.newsletterList();
+    newsletters.forEach( async (newsletters: any) => {
       const dateTime = new Date(newsletters.scheduled).toLocaleString();
       if (dateTime === currentTime) {
-        this.sendEmailByNewsletter(newsletters.id)
+        await this.sendEmailByNewsletter(newsletters.id)
       }
     });
     console.log("Running service...");
   }
 
-  emailsSendedList() {
-    return this.emailSended;
+  async emailsSendedList() {
+    return this.emailSended.find().exec();
   }
 }

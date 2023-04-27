@@ -1,5 +1,4 @@
 import {
-  Int,
   Resolver,
   Args,
   Mutation,
@@ -15,12 +14,12 @@ export class EmailResolver {
   ) {}
 
   @Query(() => [EmailRegister])
-  emailsSendedList() {
+  async emailsSendedList() {
     return this.emailService.emailsSendedList();
   }
 
   @Mutation(() => Boolean)
-  async submission(@Args('id', { type: () => Int }) id: number) {
+  async submission(@Args('id') id: string) {
     return this.emailService.sendEmailByNewsletter(id);
   }
 }

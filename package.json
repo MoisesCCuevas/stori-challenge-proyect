@@ -6,9 +6,10 @@
   "scripts": {
     "build": "lerna run build",
     "link": "lerna link --force-local",
-    "build:docker": "docker-compose build --no-cache",
-    "docker:up": "docker-compose up",
-    "docker:stop": "docker-compose stop"
+    "docker:build": "./packages docker-compose build --no-cache",
+    "docker:up": "./packages docker-compose up",
+    "docker:stop": "./packages docker-compose stop",
+    "docker:down": "./packages docker-compose down"
   },
   "keywords": [],
   "author": "Moises C Cuevas",

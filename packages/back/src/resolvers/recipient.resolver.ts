@@ -1,5 +1,4 @@
 import {
-    Int,
     Resolver,
     Args,
     Query,
@@ -16,7 +15,7 @@ import {
     ) {}
   
     @Query(() => Recipient)
-    async recipient(@Args('id', { type: () => Int }) id: number) {
+    async recipient(@Args('id') id: string) {
       return this.recipientService.findRecipient(id);
     }
   

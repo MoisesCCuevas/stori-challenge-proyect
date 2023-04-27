@@ -1,16 +1,24 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql';
+import { Field, ObjectType } from '@nestjs/graphql';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
 
+@Schema()
 @ObjectType()
-export class Recipient {
-  @Field(() => Int)
-  id: number;
+export class Recipient extends Document {
+  @Field()
+  id: string;
 
+  @Prop({ required: true })
   @Field()
   name: string;
 
+  @Prop({ required: true })
   @Field()
   email: string;
 
-  @Field(() => [Number], { nullable: true })
-  suscribed?: number[];
+  @Prop()
+  @Field(() => [String], { nullable: true })
+  suscribed?: string[];
 }
+
+export const RecipientSchema = SchemaFactory.createForClass(Recipient);
