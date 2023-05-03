@@ -7,6 +7,7 @@ import {
   import { Recipient } from '../models/recipient.model';
   import { CreateRecipient } from '../dtos/recipient.dto';
   import { RecipientService } from '../services/recipient.service';
+  import { ValidateIdPipe } from '../common/validate-id/validate-id.pipe';
   
   @Resolver(() => Recipient)
   export class RecipientResolver {
@@ -15,7 +16,7 @@ import {
     ) {}
   
     @Query(() => Recipient)
-    async recipient(@Args('id') id: string) {
+    async recipient(@Args('id', ValidateIdPipe) id: string) {
       return await this.recipientService.findRecipient(id);
     }
   
