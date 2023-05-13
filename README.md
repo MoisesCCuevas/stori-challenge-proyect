@@ -2,7 +2,7 @@
 
 This is a personal project at development of a newsletters application, that send an email design to a list of recipients.
 
-## Backed Technologies
+## Backend Technologies
 1. Nest.js
 2. TypeScript
 3. Apollo Server
