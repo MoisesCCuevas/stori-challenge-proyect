@@ -1,25 +1,21 @@
-# Stori Technical Challenge
+# Newsletter Apllication
 
-For this challenge you will need to code a simple newsletter sending app. The app should consist of
-both front and back end. You can either make completely separate components (like a SPA + a rest
-api) or a front + back combo (for example, a php website that can be both the UI and send the
-newsletters).
+This is a personal project at development of a newsletters application, that send an email design to a list of recipients.
 
-We prefer that you code in Python, Javascript/Typescript or Golang; but other languages are ok too.
-Package your code in one or more Docker images. Include any build or run scripts, Dockerfiles or
-docker-compose files needed to build and execute your code.
+## Backend Technologies
+1. Nest.js
+2. TypeScript
+3. Apollo Server
+4. GraphQL
+5. Mongoose
 
-## Bonus points
-1. Email is personalized and using html format
-2. Recipient user can opt for only unsubscribe from specific newsletters
-3. A statistics dashboard is provided (number of sent mails, number of recipients, etc.)
-4. Newsletter sending can be scheduled.
+## Frontend Technologies
+1. React.js
+2. TypeScript
+3. Sass
+4. Redux toolkit
+5. Jest
 
-## Delivery and code requirements
-1. Admin user can upload a pdf or png image (the newsletter)
-2. Admin user can submit an email list of recipients of the newsletter
-3. Admin user can add a single email to the recipient list
-4. Admin user can click a button to trigger the newsletter submission
-5. PDF of png document should be attached to the email
-6. Recipient users can click a "unsubscribe" link contained in the email, the user should not receive
-any more emails.
+All is running on docker images using docker-compose file on packages directory.
+
+Also is there a pre-configuration of lerna because I want to separate the core components from the front to an outside library. 
