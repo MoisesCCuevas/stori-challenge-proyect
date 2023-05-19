@@ -1,7 +1,6 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('config', () => {
-  console.log(process.env.EMAIL_HOST);
   return {
     database: {
       name: process.env.DATABASE_NAME,

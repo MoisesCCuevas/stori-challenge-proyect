@@ -7,9 +7,9 @@ import { setNotification } from '../redux/reducers/mainSlice';
 import { useAuth0 } from '@auth0/auth0-react';
 import Navbar from './Navbar';
 import Home from './Home';
-import Main from './newsletters/Main';
+import Main from './Newsletters';
 import InfoNewsletter from './newsletters/InfoNewsletter';
-import InfoRecipient from './newsletters/InfoRecipient';
+import InfoRecipient from './recipients/InfoRecipient';
 import Statistics from './Statistics';
 import Notification from './../components/core/notification';
 

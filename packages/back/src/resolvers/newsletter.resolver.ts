@@ -6,6 +6,7 @@ import {
 } from '@nestjs/graphql';
 import { Newsletter } from '../models/newsletter.model';
 import { CreateNewsletter } from '../dtos/newsletter.dto';
+import { Pagination } from '../dtos/pagination.dto';
 import { NewsletterService } from '../services/newsletter.service';
 
 @Resolver(() => Newsletter)
@@ -20,8 +21,8 @@ export class NewsletterResolver {
   }
 
   @Query(() => [Newsletter])
-  async newsletterList() {
-    return await this.newsletterService.newsletterList();
+  async newsletterList(@Args('pag', { nullable: true }) pag?: Pagination) {
+    return await this.newsletterService.newsletterList(pag);
   }
 
   @Mutation(() => Newsletter)

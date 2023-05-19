@@ -1,13 +1,13 @@
 import React, { useContext } from 'react';
-import './../../theme/newsletters.scss';
-import { ThemeContext } from '../../theme/ThemeProvider';
+import './../theme/newsletters.scss';
+import { ThemeContext } from '../theme/ThemeProvider';
 import {
   useSelectorT as useSelector,
   useDispatchT as useDispatch
-} from '../../redux/hooks';
-import { setActiveTab } from '../../redux/reducers/mainSlice';
-import NewslettersList from './NewslettersList';
-import Recipient from './Recipient';
+} from '../redux/hooks';
+import { setActiveTab } from '../redux/reducers/mainSlice';
+import NewslettersList from './newsletters/Newsletters';
+import Recipient from './recipients/Recipient';
 
 const screens: any = [
   NewslettersList,

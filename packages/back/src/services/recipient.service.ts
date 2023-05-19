@@ -57,7 +57,7 @@ export class RecipientService {
   async unsubscribeRecipient(idNewsletter: string, idUser: string) {
     try {
       const recipient = await this.findRecipient(idUser);
-      const newSuscribed = recipient.suscribed.filter(v => v !== idNewsletter);
+      const newSuscribed = recipient.suscribed.filter(v => v.id !== idNewsletter);
       await this.recipients
         .findByIdAndUpdate(idUser, { $set: { suscribed: newSuscribed }})
         .exec();

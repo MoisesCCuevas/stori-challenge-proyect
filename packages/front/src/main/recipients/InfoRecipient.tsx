@@ -8,12 +8,12 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatchT as useDispatch } from '../../redux/hooks';
 import { setNotification } from '../../redux/reducers/mainSlice';
-import Button from './../../components/core/button';
-import Input from './../../components/core/input';
-import ListItem from './../../components/core/listItem';
+import Button from '../../components/core/button';
+import Input from '../../components/core/input';
+import ListItem from '../../components/container/listItem';
 import { CREATE_RECIPIENT } from '../../graphql/mutations/recipient';
 import { GET_RECIPIENT } from '../../graphql/querys/recipient';
-import { GET_ALL_NEWSLETTERS } from './../../graphql/querys/newsletter';
+import { GET_ALL_NEWSLETTERS } from '../../graphql/querys/newsletter';
 
 interface InfoRecipient {
   id?: number
@@ -49,7 +49,7 @@ const InfoRecipient : React.FC = (props) => {
     const email : any = document.querySelector("#recipient-email");
     name.value = dataQuery.recipient.name;
     email.value = dataQuery.recipient.email;
-    setNewsletters(dataQuery.recipient.suscribed);
+    setNewsletters(dataQuery.recipient.suscribed.map((n: any) => n.id));
   };
 
   useEffect(() => {

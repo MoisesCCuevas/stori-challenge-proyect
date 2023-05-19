@@ -16,7 +16,10 @@ export const GET_RECIPIENT = gql`
       id
       name
       email
-      suscribed
+      suscribed {
+        name
+        id
+      }
     }
   }
 `;

@@ -1,6 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { Newsletter } from '../models/newsletter.model';
 import { CreateNewsletter } from '../dtos/newsletter.dto';
+import { Pagination } from '../dtos/pagination.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 
@@ -10,8 +11,15 @@ export class NewsletterService {
     @InjectModel(Newsletter.name) private newsletters: Model<Newsletter>
   ) {}
 
-  async newsletterList() {
+  async newsletterList(pag?: Pagination) {
+    if (pag) {
+      return this.newsletters.find().skip(pag.offset).limit(pag.limit).exec();
+    }
     return this.newsletters.find().exec();
+  }
+
+  async findNewsletterByIds(ids: any[]) {
+    return this.newsletters.find().where('_id').in(ids).exec();
   }
 
   async findNewsletter(id: string) {

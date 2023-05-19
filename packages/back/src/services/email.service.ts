@@ -68,4 +68,8 @@ export class EmailService {
   async emailsSendedList() {
     return this.emailSended.find().exec();
   }
+
+  async countEmails() {
+    return this.emailSended.find().count().exec();
+  }
 }

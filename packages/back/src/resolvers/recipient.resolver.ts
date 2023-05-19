@@ -2,17 +2,22 @@ import {
     Resolver,
     Args,
     Query,
-    Mutation
+    Mutation,
+    ResolveField,
+    Parent
   } from '@nestjs/graphql';
   import { Recipient } from '../models/recipient.model';
+  import { Newsletter } from '../models/newsletter.model';
   import { CreateRecipient } from '../dtos/recipient.dto';
   import { RecipientService } from '../services/recipient.service';
+  import { NewsletterService } from '../services/newsletter.service';
   import { ValidateIdPipe } from '../common/validate-id/validate-id.pipe';
   
   @Resolver(() => Recipient)
   export class RecipientResolver {
     constructor(
-      private recipientService: RecipientService
+      private recipientService: RecipientService,
+      private newsletterService: NewsletterService
     ) {}
   
     @Query(() => Recipient)
@@ -33,5 +38,12 @@ import {
     @Mutation(() => Boolean)
     async createManyRecipients(@Args({ name: 'recipients', type: () => [CreateRecipient] }) recipients: CreateRecipient[]){
       return await this.recipientService.createManyRecipient(recipients);
+    }
+
+    @ResolveField(() => [Newsletter])
+    async suscribed(@Parent() recipient: Recipient) {
+      const { suscribed } = recipient;
+      console.log(typeof suscribed[0]);
+      return await this.newsletterService.findNewsletterByIds(suscribed);
     }
   }

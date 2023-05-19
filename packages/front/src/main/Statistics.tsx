@@ -1,6 +1,6 @@
 import React from 'react';
 import '../theme/newsletters.scss';
-import ListItem from '../components/core/listItem';
+import ListItem from '../components/container/listItem';
 import { useQuery } from '@apollo/client';
 import { GET_ALL_RECIPIENTS } from './../graphql/querys/recipient';
 import { GET_ALL_NEWSLETTERS } from './../graphql/querys/newsletter';

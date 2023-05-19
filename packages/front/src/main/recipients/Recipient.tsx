@@ -4,10 +4,11 @@ import { useQuery, useMutation } from '@apollo/client';
 import { useDispatchT as useDispatch } from '../../redux/hooks';
 import { setNotification } from '../../redux/reducers/mainSlice';
 import Button from '../../components/core/button';
-import Input from './../../components/core/input';
-import ListItem from '../../components/core/listItem';
-import { GET_ALL_RECIPIENTS } from './../../graphql/querys/recipient';
-import { CREATE_RECIPIENTS } from './../../graphql/mutations/recipient';
+import Input from '../../components/core/input';
+import ListItem from '../../components/container/listItem';
+import DataList from '../../components/container/dataList';
+import { GET_ALL_RECIPIENTS } from '../../graphql/querys/recipient';
+import { CREATE_RECIPIENTS } from '../../graphql/mutations/recipient';
 
 const Recipient : React.FC = (props) => {
   const {
@@ -77,26 +78,31 @@ const Recipient : React.FC = (props) => {
         </Button>
       </div>
       <br />
-      {loading && <i className='fas fa-spinner fa-spin' />}
-      {data?.recipientList.map(({ id, name, email }: any) => (
-        <ListItem key={id}>
-          <p>{name}</p>
-          <p>{email}</p>
-          <div className='buttons-container'>
-            <Link to={`/newsletters/info-recipient/${id}`}>
-              <Button>
-                <i className='fas fa-pen'/>
-                <div>Edit</div>
-              </Button>
-            </Link>
-          </div>
-        </ListItem>
-      ))}
-      {data?.recipientList.length <= 0 && (
-        <ListItem>
-          <h3>Recipients Not Found</h3>
-        </ListItem>
-      )}
+      <DataList
+        loading={loading}
+        data={data?.recipientList}
+        isEmpty={data?.recipientList.length <= 0}
+        onLoading={() => <i className='fas fa-spinner fa-spin' />}
+        onEmpty={() => (
+          <ListItem>
+            <h3>Recipients Not Found</h3>
+          </ListItem>
+        )}
+        render={({ id, name, email }: any) => (
+          <ListItem key={id}>
+            <p>{name}</p>
+            <p>{email}</p>
+            <div className='buttons-container'>
+              <Link to={`/newsletters/info-recipient/${id}`}>
+                <Button>
+                  <i className='fas fa-pen'/>
+                  <div>Edit</div>
+                </Button>
+              </Link>
+            </div>
+          </ListItem>
+        )}
+      />
     </div>
   );
 }

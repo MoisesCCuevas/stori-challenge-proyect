@@ -18,6 +18,11 @@ export class EmailResolver {
     return await this.emailService.emailsSendedList();
   }
 
+  @Query(() => Number)
+  async totalEmailsSended() {
+    return await this.emailService.countEmails();
+  }
+
   @Mutation(() => Boolean)
   async submission(@Args('id') id: string) {
     return await this.emailService.sendEmailByNewsletter(id);

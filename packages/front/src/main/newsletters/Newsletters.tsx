@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { useDispatchT as useDispatch } from '../../redux/hooks';
 import { setNotification } from '../../redux/reducers/mainSlice';
 import { useQuery, useMutation } from '@apollo/client';
-import Button from './../../components/core/button';
-import ListItem from './../../components/core/listItem';
-import { GET_ALL_NEWSLETTERS } from './../../graphql/querys/newsletter';
-import { SEND_NEWSLETTER } from './../../graphql/mutations/newsletter';
+import Button from '../../components/core/button';
+import ListItem from '../../components/container/listItem';
+import DataList from '../../components/container/dataList';
+import { GET_ALL_NEWSLETTERS } from '../../graphql/querys/newsletter';
+import { SEND_NEWSLETTER } from '../../graphql/mutations/newsletter';
 
-const NewslettersList : React.FC = (props) => {
+const Newsletters : React.FC = (props) => {
   const {
   } = props;
 
@@ -57,31 +58,36 @@ const NewslettersList : React.FC = (props) => {
         </Button>
       </Link>
       <br />
-      {(loading || loadingS) && <i className='fas fa-spinner fa-spin' />}
-      {data?.newsletterList.map(({ id, name }: any) => (
-        <ListItem key={id}>
-          <p>{name}</p>
-          <div className='buttons-container'>
-            <Link to={`/newsletters/info-newsletter/${id}`}>
-              <Button>
-                <i className='fas fa-pen'/>
-                <div>Edit</div>
+      <DataList
+        loading={loading || loadingS}
+        data={data?.newsletterList}
+        isEmpty={data?.newsletterList.length <= 0}
+        onLoading={() => <i className='fas fa-spinner fa-spin' />}
+        onEmpty={() => (
+          <ListItem>
+            <h3>Newsletters Not Found</h3>
+          </ListItem>
+        )}
+        render={({ id, name }: any) => (
+          <ListItem key={id}>
+            <p>{name}</p>
+            <div className='buttons-container'>
+              <Link to={`/newsletters/info-newsletter/${id}`}>
+                <Button>
+                  <i className='fas fa-pen'/>
+                  <div>Edit</div>
+                </Button>
+              </Link>
+              <Button onClick={() => submissionAction(id)}>
+                <i className='fas fa-paper-plane'/>
+                <div>Submission</div>
               </Button>
-            </Link>
-            <Button onClick={() => submissionAction(id)}>
-              <i className='fas fa-paper-plane'/>
-              <div>Submission</div>
-            </Button>
-          </div>
-        </ListItem>
-      ))}
-      {data?.newsletterList.length <= 0 && (
-        <ListItem>
-          <h3>Newsletters Not Found</h3>
-        </ListItem>
-      )}
+            </div>
+          </ListItem>
+        )}
+      />
     </div>
   );
 }
 
-export default NewslettersList;
+export default Newsletters;

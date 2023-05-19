@@ -10,12 +10,7 @@ import { Link, useParams, useNavigate } from "react-router-dom";
 import { useMutation, useQuery } from '@apollo/client';
 import { useDispatchT as useDispatch } from '../../redux/hooks';
 import { setNotification } from '../../redux/reducers/mainSlice';
-import {
-  filesToDataURL,
-  dataURLToFile,
-  getUniqFiles,
-  arrayFilesToFileList
-} from '../../utils/utils';
+import { useUtils } from '../../hooks/useUtils';
 import EmailEditor from 'react-email-editor';
 import Button from './../../components/core/button';
 import Input from './../../components/core/input';
@@ -33,6 +28,12 @@ const InfoNewsletter : React.FC = (props) => {
   const {
   } = props;
 
+  const {
+    filesToDataURL,
+    dataURLToFile,
+    getUniqFiles,
+    arrayFilesToFileList
+  } = useUtils();
   const [files, setFiles] = useState<any>([]);
   const dispatch = useDispatch();
   let { id } = useParams();

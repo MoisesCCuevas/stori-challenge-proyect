@@ -1,6 +1,7 @@
 import { Field, ObjectType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types } from 'mongoose';
+import { Newsletter } from './newsletter.model';
 
 @Schema()
 @ObjectType()
@@ -16,9 +17,9 @@ export class Recipient extends Document {
   @Field()
   email: string;
 
-  @Prop()
-  @Field(() => [String], { nullable: true })
-  suscribed?: string[];
+  @Prop({ type: [{ type: Types.ObjectId, ref: Newsletter.name }] })
+  @Field(() => [Newsletter], { nullable: true })
+  suscribed?: Newsletter[];
 }
 
 export const RecipientSchema = SchemaFactory.createForClass(Recipient);
