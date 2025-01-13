@@ -26,6 +26,11 @@ const Button : React.FC<buttonProps> = (props) => {
       data-testid="button"
       type={type}
     >
+      {/* {
+        React.Children
+          .toArray(children)
+          .map((c: any) => React.cloneElement(c, { disabled }))
+      } */}
       {children}
     </button>
   );

@@ -2,13 +2,15 @@ import React, { useState, useContext } from 'react';
 import { ThemeContext } from '../theme/ThemeProvider';
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '../components/core/button';
+import { withRoles } from '../hoc/withRoles';
 
-interface Profile {
+export interface Profile {
   user: {
     name?: string,
     picture?: string,
     email?: string
-  }
+  },
+  roles?: any
 };
 
 const Profile : React.FC<Profile> = (props) => {
@@ -69,4 +71,4 @@ const Profile : React.FC<Profile> = (props) => {
   );
 }
 
-export default Profile;
+export default withRoles(Profile);
